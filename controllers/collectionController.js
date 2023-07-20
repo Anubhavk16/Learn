@@ -19,9 +19,15 @@ const collectionController = {
     try {
       const check = await collection.findOne({ email: email });
 
+
       if (check) {
-        res.json("exist");
-      } else {
+        const isPasswordCorrect = await bcrypt.compare(password, check.password);
+        if(isPasswordCorrect){
+        res.json("matched");
+        } else {
+          res.json("not matched");
+        }}
+       else {
         res.json("notexist");
       }
     } catch (e) {
@@ -40,6 +46,14 @@ const collectionController = {
       if (check) {
         res.json("exist");
       } else {
+        // Hash the password before storing it in the database
+        const saltRounds = 10;
+        const hashedPassword = await bcrypt.hash(password, saltRounds);
+  
+        const data = {
+          email: email,
+          password: hashedPassword,
+        };
         res.json("notexist");
         await collection.insertMany([data]);
       }

@@ -47,7 +47,24 @@ function Login() {
             <form action="POST">
                 <input type="email" onChange={(e) => { setEmail(e.target.value) }} placeholder="Email"  />
                 <input type="password" onChange={(e) => { setPassword(e.target.value) }} placeholder="Password" />
+                <div >
+            <input
+              type="radio"
+              id="exampleCheck1"
+              name="Choose"
+              value="Superuser"
+          
+            /><label htmlFor="exampleCheck1">Superuser &nbsp;</label>
+            <input
+              type="radio"
+              id="exampleCheck2"
+              name="Choose"
+              value="user"
+            
+            />
+            <label htmlFor="exampleCheck2">user &nbsp;</label>
                 <input type="submit" onClick={submit} />
+                </div>
 
             </form>
 

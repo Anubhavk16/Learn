@@ -7,6 +7,7 @@ import './home.css';
 import Pagination from 'react-js-pagination'; 
 import { DebounceInput } from "react-debounce-input";
 
+
 function Home() {
   const navigate = useNavigate();
   const [users, setUsers] = useState([]);
@@ -86,7 +87,7 @@ function Home() {
           <thead>
             <tr>
               <th>Email</th>
-              <th>Password</th>
+              {/* <th>Password</th> */}
               <th>Action</th>
             </tr>
           </thead>
@@ -94,7 +95,7 @@ function Home() {
             {(searchQuery !== '' ? searchResults : users).map((user) => (
               <tr key={user._id}>
                 <td>{user.email}</td>
-                <td>{user.password}</td>
+                {/* <td>{user.password}</td> */}
                 <td>
                   <button onClick={() => update(user._id)}>Update</button>
                   <button onClick={() => deleteUser(user._id)}>Delete</button>

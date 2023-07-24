@@ -98,6 +98,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { useState } from 'react';
 import Updateuser from "./components/updateuser"
 // import Pagination from "./components/pagination";
+import Child from "./components/child";
 
 
 function App() {
@@ -111,6 +112,12 @@ function App() {
           <Route path="/update/:id" element={<Updateuser/>}/>
           {/* <Route path="/pagination" element={<Pagination/>}/> */}
         </Routes>
+        <ul>
+                    <li>
+                        <Child usercolor="blue" />
+
+                    </li>
+                </ul>
       
     </div>
   );

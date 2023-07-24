@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useParams , useNavigate} from 'react-router-dom';
+import { Formik, Form, Field, ErrorMessage } from "formik";
 
 const Updateuser = () => {
   const navigate =useNavigate();
@@ -42,7 +43,7 @@ const Updateuser = () => {
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
+    // se.preventDefault();
     console.log(userId.id);
     try {
       await axios.post(`http://localhost:8000/update?`+ new URLSearchParams({
@@ -65,16 +66,25 @@ const Updateuser = () => {
   return (
     <div>
       <h2>Update User</h2>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label>Email:</label>
-          <input
-            type="email"
-            value={updateEmail}
-            onChange={handleEmailChange}
-          />
-        </div>
-        <div>
+      <Formik
+      initialValues={{
+        updateEmail:updateEmail,
+        updatePassword:updatePassword
+      }}
+       onSubmit={handleSubmit}
+       >
+        {({values,handleSubmit,})=>(
+          <form onSubmit={handleSubmit}>
+            <div>
+              <label>Email:</label>
+              <Field
+                type="email"
+                name="updateEmail"
+                value={updateEmail}
+                onChange={handleEmailChange}
+              />
+            </div>
+            <div>
           <label>Password:</label>
           <input
             type="password"
@@ -83,9 +93,19 @@ const Updateuser = () => {
           />
         </div>
         <button type="submit">Update</button>
-      </form>
+          </form>
+        )}
+
+          </Formik>
+        
+        
+      
     </div>
   );
 };
 
 export default Updateuser;
+
+
+
+

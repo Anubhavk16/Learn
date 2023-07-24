@@ -1,6 +1,10 @@
+
 const { ObjectId } = require('mongodb');
 
 const collection = require("../models/users");
+const jwt = require('jsonwebtoken');
+
+JWT_SECRET="1234"
 
 const bcrypt = require('bcrypt');
 
@@ -18,20 +22,25 @@ const collectionController = {
     const { email, password } = req.body;
     try {
       const check = await collection.findOne({ email: email });
-
-
+  
       if (check) {
         const isPasswordCorrect = await bcrypt.compare(password, check.password);
-        if(isPasswordCorrect){
-        res.json("matched");
+        if (isPasswordCorrect) {
+          // Generate a JWT token
+          const token = jwt.sign({ email: check.email },JWT_SECRET, {
+            expiresIn: '1h' // Token expires in 1 hour
+          });
+  
+          // Send the token as a response
+          res.json({ status: 'matched', token: token });
         } else {
-          res.json("not matched");
-        }}
-       else {
-        res.json("notexist");
+          res.json({ status: 'not matched' });
+        }
+      } else {
+        res.json({ status: 'notexist' });
       }
     } catch (e) {
-      res.json("fail");
+      res.json({ status: 'fail' });
     }
   },
   async signup(req, res) {
@@ -152,7 +161,6 @@ module.exports = collectionController;
   
 
   
-
 
 
 

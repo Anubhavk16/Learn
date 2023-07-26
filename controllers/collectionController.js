@@ -3,6 +3,7 @@ const { ObjectId } = require('mongodb');
 
 const collection = require("../models/users");
 const jwt = require('jsonwebtoken');
+const authenticateUser = require('../middleware/authentication');
 
 JWT_SECRET="1234"
 
@@ -22,15 +23,15 @@ const collectionController = {
     const { email, password } = req.body;
     try {
       const check = await collection.findOne({ email: email });
-  
+
       if (check) {
         const isPasswordCorrect = await bcrypt.compare(password, check.password);
         if (isPasswordCorrect) {
-          // Generate a JWT token
-          const token = jwt.sign({ email: check.email },JWT_SECRET, {
+          // Generate a JWT token with the user's ID included in the payload
+          const token = jwt.sign({ userId: check._id, email: check.email }, JWT_SECRET, {
             expiresIn: '1h' // Token expires in 1 hour
           });
-  
+
           // Send the token as a response
           res.json({ status: 'matched', token: token });
         } else {
@@ -42,6 +43,7 @@ const collectionController = {
     } catch (e) {
       res.json({ status: 'fail' });
     }
+  
   },
   async signup(req, res) {
     const { email, password } = req.body;
@@ -81,29 +83,35 @@ const collectionController = {
     }
   },
   async updateUser(req, res) {
-    const userId = req.query.id;
+    const userId = req.params.id;
     const { email, password } = req.body;
-    console.log(userId, email,password);
-  
+    console.log(userId, email, password);
+
     try {
-      const user = await collection.updateOne({"_id":new ObjectId(`${userId}`)},{$set:{
-        email:email,
-        password:password
-      }});
-      console.log(user);
-  
-      if (!user) {
+      // Check if the request is from an authenticated user
+      const authorizedUser = req.user;
+      if (!authorizedUser || authorizedUser.email !== email) {
+        return res.status(403).json({ error: 'Access denied. You are not authorized to update this user.' });
+      }
+
+      const hashedPassword = await bcrypt.hash(password, 10);
+
+      const updatedUser = await User.findByIdAndUpdate(userId, {
+        email: email,
+        password: hashedPassword,
+      }, { new: true });
+
+      if (!updatedUser) {
         return res.status(404).json({ error: "User not found" });
       }
-  
-      
-  
-      res.json({ message: "User updated successfully", user });
+
+      res.json({ message: "User updated successfully", user: updatedUser });
     } catch (error) {
       console.log(`Could not update user: ${error}`);
       res.status(500).json({ error: "Failed to update user" });
     }
   },
+
   async getDatabyId(req,res){
     try {
       const data = await collection.find({'_id':req.query.id});
@@ -117,10 +125,17 @@ const collectionController = {
   async paginatedUsers(req, res) {
     try {
       const query = req.query.search || '';
+      const userId = req.user.userId;
+      console.log(req.user," userId");
       const allUser = await collection.find({
-        $or: [
-          { email: { $regex: query, $options: 'i' } },
-          { password: { $regex: query, $options: 'i' } }
+        $and: [
+          { _id: new ObjectId(userId) }, 
+          {
+            $or: [
+              { email: { $regex: query, $options: 'i' } },
+              { password: { $regex: query, $options: 'i' } }
+            ]
+          }
         ]
       });
   
@@ -144,6 +159,7 @@ const collectionController = {
         };
       }
       results.result = allUser.slice(startIndex, lastIndex);
+      console.log(results,'resssssssssssssssssssssssssssssssss');
       res.json(results);
     } catch (error) {
       console.log(`Could not fetch paginated users: ${error}`);
@@ -161,9 +177,3 @@ module.exports = collectionController;
   
 
   
-
-
-
-
-
-

@@ -6,11 +6,10 @@
     "jsonwebtoken": "^9.0.1",
     "mongodb": "^5.7.0",
     "mongoose": "^7.3.2",
+    "node-fetch": "^3.3.1",
     "nodemon": "^3.0.1"
   },
-  
-    "scripts": {
-      "start": "nodemon server.js"
-    }
-  
+  "scripts": {
+    "start": "nodemon server.js"
+  }
 }

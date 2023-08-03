@@ -77,4 +77,12 @@
   background-color: #eee;
 }
 
-  
+.nav{
+  width: 80%;
+  padding: 0px;
+  align-items: left;
+}
+.navbar-light navbar-expand-lg bg-light{
+  width:100%;
+  padding: 60px;
+}

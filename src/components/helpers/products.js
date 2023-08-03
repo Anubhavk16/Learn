@@ -8,7 +8,7 @@ function Products() {
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
-    // Fetch products from the backend server
+    
     axios
       .get("http://localhost:8000/getproducts")
       .then((response) => setProducts(response.data))

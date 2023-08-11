@@ -95,18 +95,22 @@ import Home from "./components/home"
 import Login from "./components/login"
 import Signup from "./components/signup"
 import Navbar from "./components/helpers/NavBar";
+import Cart from"./components/helpers/cart";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { useState } from 'react';
 import Updateuser from "./components/updateuser"
 // import Pagination from "./components/pagination";
 import Child from "./components/child";
 import Products from "./components/helpers/products";
+import SideNavigation from "./components/helpers/sideNavigation";
 
 
 function App() {
   return (
     <>
     <Navbar/>
+    
+    
     
     <div className="App">
       
@@ -116,6 +120,7 @@ function App() {
           <Route path="/home" element={<Home/>}/>
           <Route path="/update/:id" element={<Updateuser/>}/>
           <Route path="/Products" element={<Products/>}/>
+          <Route path="/cart" element={<Cart/>}/>
           {/* <Route path="/pagination" element={<Pagination/>}/> */}
         </Routes>
         

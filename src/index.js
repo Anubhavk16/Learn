@@ -4,10 +4,16 @@ import './index.css';
 import { BrowserRouter } from "react-router-dom";
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import store from "./store"
+// import store from "./store/store"
 import { Provider } from 'react-redux';
-// import Input from "./components/signup"
-// store.subscribe(()=>console.log(store.getState()));
+import {  configureStore } from '@reduxjs/toolkit';
+import Categoryslices from './store/slices/Categoryslices';
+
+const store=configureStore({
+    reducer:{
+        category:Categoryslices
+    }
+})
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

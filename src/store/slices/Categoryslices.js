@@ -37,7 +37,7 @@ const categorySlice=createSlice({
             
           },
           setProducts: (state, action) => {
-            state.products = action.payload; // Update the products array
+            state.products = action.payload; 
           },
           RemoveFromCart:(state,action)=>{
             
@@ -48,13 +48,22 @@ const categorySlice=createSlice({
              
 
           },
-          
+          RemoveFromWishlist: (state, action) => {
+            const productData = state.selectedproducts.filter(
+              (selectedproduct) => selectedproduct !== action.payload
+            );
+            state.selectedproducts = productData;
+          },
+          addToWishlist: (state, action) => {
+            const productId = action.payload;
+            state.selectedproducts = [...state.selectedproducts, productId];
+          }
         },
       });
 
 
       
-      export const { setCategories, setError, setSelectedCategoryId,addToCart,RemoveFromCart,CartItems,setProducts } = categorySlice.actions;
+      export const { setCategories, setError, setSelectedCategoryId,addToCart,RemoveFromCart,CartItems,setProducts,RemoveFromWishlist,addToWishlist } = categorySlice.actions;
       
       export default categorySlice.reducer;
 

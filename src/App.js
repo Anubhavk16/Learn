@@ -6,7 +6,9 @@ import Cart from"./components/helpers/cart";
 import Wishlist from "./components/helpers/wishlist";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { useState } from 'react';
+import Profile from "./components/helpers/profile"
 import Products from "./components/helpers/products";
+
 
 function App() {
   return (
@@ -19,6 +21,7 @@ function App() {
           <Route path="/Products" element={<Products/>}/>
           <Route path="/cart" element={<Cart/>}/>
           <Route path="/wishlist" element={<Wishlist/>}/>
+          <Route path="/profile" element={<Profile/>}/>
 
           </Routes>
         </div>

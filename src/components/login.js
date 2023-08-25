@@ -3,10 +3,14 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { login } from "../store/slices/Categoryslices";
+import './login.css'
+
 
 function Login() {
   const navigate = useNavigate();
-
+  const dispatch=useDispatch();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -26,9 +30,9 @@ function Login() {
       if (data.status === "matched" && data.token) {
         localStorage.setItem("token", data.token);
         localStorage.setItem("role", data.role);
-         // Store the role in localStorage
-
+        
         navigate("/home", { state: { id: email } });
+        dispatch(login(data))
       } else if (data.status === "notexist") {
         alert("User has not signed up");
       }
@@ -54,9 +58,9 @@ function Login() {
         />
         <input type="submit" onClick={submit} />
       </form>
-      <br />
+      
       <p>OR</p>
-      <br />
+      
       <Link to="/signup">Signup Page</Link>
     </div>
   );

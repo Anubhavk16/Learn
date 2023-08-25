@@ -32,8 +32,6 @@ function SideNavigation(props) {
   
 
   const handleCategoryClick = (categoryId) => {
-    // Store the category ID in local storage
-    // localStorage.setItem("selectedCategoryId", categoryId);
     dispatch(setSelectedCategoryId(categoryId))
   };
 

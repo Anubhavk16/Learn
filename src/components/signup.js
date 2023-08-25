@@ -6,6 +6,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
 
+
 function Signup() {
   const history = useNavigate();
 
@@ -20,7 +21,7 @@ function Signup() {
       await axios.post("http://localhost:8000/signup", {
         email,
         password,
-        role, // Include the user's role in the request
+        role, 
       })
       .then(res => {
         if (res.data === "exist") {

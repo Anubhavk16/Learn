@@ -12,7 +12,6 @@ function Wishlist() {
     dispatch(RemoveFromWishlist(productId));
   };
 
-  
 
   return (
     <Container fluid>
@@ -30,7 +29,7 @@ function Wishlist() {
                   <div key={product._id} className="card mb-3">
                     <Row g={0}>
                       <Col md={3}>
-                        <img className="img-fluid" src={product.images} alt={product.title} />
+                      <img className="card-img-top" src={product.images[0]} alt={product.title} />
                       </Col>
                       <Col md={9}>
                         <div className="card-body">
@@ -38,6 +37,7 @@ function Wishlist() {
                           <p className="card-text">{product.description}</p>
                           <p className="card-text">Brand: {product.brand}</p>
                           <p className="card-text">Category: {product.category}</p>
+                          <p className="card-text">Price: {product.price}</p>
                           <button
                             className="btn btn-danger"
                             onClick={() => handleRemoveFromWishlist(product._id)}

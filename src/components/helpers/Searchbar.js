@@ -25,7 +25,11 @@ const Searchbar = () => {
   }, [dispatch]);
 
   const filteredProducts = products.filter((product) =>
-    product.title.toLowerCase().includes(searchTerm.toLowerCase())
+    product.title.toLowerCase().includes(searchTerm.toLowerCase(),
+    )||
+    product.brand.toLowerCase().includes(searchTerm.toLowerCase())
+    
+
   );
 
   return (
@@ -57,6 +61,7 @@ const Searchbar = () => {
                   <p className="card-text">{product.description}</p>
                   <p className="card-text">Brand: {product.brand}</p>
                   <p className="card-text">Category: {product.category}</p>
+                  <p className="card-text">Price: {product.price}</p>
                 </div>
               </div>
             </li>

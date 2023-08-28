@@ -18,8 +18,11 @@ function Products() {
   const selectedcat = useSelector((state) => state.category.selectedCategoryId);
   const products = useSelector((state) => state.category.products);
   const dispatch = useDispatch();
-  const [isClick, setClick] = useState(false);
+  
   const user = useSelector((state) => state.category.user);
+  
+  const [clickedProductId, setClickedProductId] = useState(null);
+  
 
   useEffect(() => {
     const fetchData = async () => {
@@ -46,12 +49,15 @@ function Products() {
   };
 
   const handleToggleWishlist = (productId) => {
-    if (isClick) {
+    if (clickedProductId === productId) {
+      
+      setClickedProductId(productId);
       dispatch(RemoveFromWishlist(productId));
     } else {
+      
+      setClickedProductId(productId);
       dispatch(addToWishlist(productId));
     }
-    setClick(!isClick);
   };
 
   return (
@@ -79,10 +85,10 @@ function Products() {
                     <p className="card-text">Category: {product.category}</p>
                     <p className="card-text">Price: {product.price}</p>
                     <div className="App">
-                      <Heart
-                        isClick={isClick}
-                        onClick={() => handleToggleWishlist(product._id)}
-                      />
+                    <Heart
+              isClick={clickedProductId === product._id} 
+              onClick={() => handleToggleWishlist(product._id)}
+            />
                     </div>
                     <button onClick={() => handleAddToCart(product._id, product.title)}>Add to Cart</button>
                   </div>

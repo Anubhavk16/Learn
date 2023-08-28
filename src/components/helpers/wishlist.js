@@ -1,15 +1,24 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Container, Row, Col } from 'react-bootstrap';
-import { RemoveFromWishlist } from '../../store/slices/Categoryslices';
+import { RemoveFromWishlist,addToCart } from '../../store/slices/Categoryslices';
+import socket from './socket';
 
 function Wishlist() {
   const wishlistItemIds = useSelector((state) => state.category.selectedproducts); 
   const products = useSelector((state) => state.category.products);
   const dispatch = useDispatch();
+  const user = useSelector((state) => state.category.user);
 
   const handleRemoveFromWishlist = (productId) => {
     dispatch(RemoveFromWishlist(productId));
+  };
+
+  const handleAddToCart = (productId, title) => {
+    const email = user.email;
+
+    dispatch(addToCart(productId));
+    socket.emit('addToCartNotification', { email, title });
   };
 
 
@@ -43,6 +52,12 @@ function Wishlist() {
                             onClick={() => handleRemoveFromWishlist(product._id)}
                           >
                             Remove From Wishlist
+                          </button>
+                          <button
+                            className="btn btn-danger"
+                            onClick={() => handleAddToCart(product._id)}
+                          >
+                            Add to cart
                           </button>
                         </div>
                       </Col>

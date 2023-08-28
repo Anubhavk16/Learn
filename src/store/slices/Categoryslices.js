@@ -4,6 +4,7 @@ selectedproducts:[],
 products: [],
 isAuthenticated: false,
 user: [],
+
 notifications: [],
 
 
@@ -83,10 +84,6 @@ const categorySlice=createSlice({
             state.selectedproducts = state.selectedproducts.filter(
               (selectedproduct) => selectedproduct.id !== action.payload
             );
-          
-          
-            
-             
 
           },
           RemoveFromWishlist: (state, action) => {

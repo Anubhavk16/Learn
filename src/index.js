@@ -4,7 +4,6 @@ import './index.css';
 import { BrowserRouter } from "react-router-dom";
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-// import store from "./store/store"
 import { Provider } from 'react-redux';
 import {  configureStore } from '@reduxjs/toolkit';
 import Categoryslices from './store/slices/Categoryslices';

@@ -73,12 +73,12 @@ function NavBar() {
       <Navbar bg="dark" data-bs-theme="dark" style={{ height: '100px', width: '100%' }}>
         <Container>
           <Navbar.Brand href="/home">Home</Navbar.Brand>
-          <Nav className="">
+          <Nav >
             {isAuthenticated ? (
               <>
-                <Button variant="primary" onClick={Cart}>
-                             Cart<Badge bg="secondary">{selectedproducts.length}</Badge>
-                             <span className="visually-hidden">unread messages</span>
+                <Button onClick={Cart}>
+                             Cart
+                           
                          </Button>
                          <Nav.Link onClick={Wishlist}>Wishlist <FontAwesomeIcon icon={faHeart} /></Nav.Link>
                          <Nav.Link onClick={Profile}>Profile</Nav.Link>
@@ -88,7 +88,7 @@ function NavBar() {
               </>
             ) : (
               <>
-                                     <Button variant="primary" onClick={Cart}>Cart<Badge bg="secondary">{selectedproducts.length}</Badge>
+                                     <Button  onClick={Cart}>Cart
                          <span className="visually-hidden">unread messages</span></Button>
                          <Nav.Link onClick={Wishlist}>Wishlist <FontAwesomeIcon icon={faHeart} /></Nav.Link>
                          <Nav.Link onClick={Profile}>Profile</Nav.Link>

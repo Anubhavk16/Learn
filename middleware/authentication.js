@@ -2,20 +2,18 @@
 const jwt = require('jsonwebtoken');
 const JWT_SECRET = "1234";
 
-const authenticateUser = (req, res, next) => {
-  const token = req.header('Authorization');
-
+module.exports = (req, res, next) => {
+  const token = req.header('authorization');
   if (!token) {
-    return res.status(401).json({ error: 'Access denied. Token missing.' });
+    return res.status(401).json({ error: 'Authorization failed. Token not provided.' });
   }
 
   try {
     const decoded = jwt.verify(token, JWT_SECRET);
     req.user = decoded;
+    
     next();
   } catch (error) {
-    return res.status(401).json({ error: 'Invalid token.' });
+    res.status(401).json({ error: 'Authorization failed. Invalid token.' });
   }
 };
-
-module.exports = authenticateUser;
